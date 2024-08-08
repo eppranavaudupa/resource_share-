@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="action" method="post">
+        <input 
+        style="height:500px; width:800px;" 
+        type="text" id="inputField">
+    </form>
+    <div id="dataContainer">
+        <!-- Data Placeholder -->
+    </div>
+</body>
+<script>
+    const inputField = document.getElementById("inputField");
+    inputField.addEventListener("keypress", () => {
+        const data = inputField.value;
+        console.log(data);
+
+        fetch('http://localhost:8080/source', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',  // Indicating that we're sending JSON data
+            },
+            body: JSON.stringify({message: data}),  // Converting data to JSON string
+        })
+        .then(response => response.json())
+        .then(data=> {
+            console.log('Response from backend:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+</html>
